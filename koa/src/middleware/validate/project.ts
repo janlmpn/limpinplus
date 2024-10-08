@@ -13,7 +13,7 @@ interface ProjectRequest {
 const addProject = async (ctx: Koa.Context, next: Koa.Next) => {
   const params = ctx.request.body as ProjectRequest;
   const schema = Joi.object({
-    title: Joi.string().min(3).max(20).required(),
+    title: Joi.string().required(),
     type: Joi.string(),
     description: Joi.string(),
     address: Joi.string(),
@@ -27,6 +27,24 @@ const addProject = async (ctx: Koa.Context, next: Koa.Next) => {
   await next();
 };
 
+const updateProject = async (ctx: Koa.Context, next: Koa.Next) => {
+  const params = ctx.request.body as ProjectRequest;
+  const schema = Joi.object({
+    title: Joi.string().required(),
+    type: Joi.string(),
+    description: Joi.string(),
+    address: Joi.string(),
+    _id: Joi.string()
+  }).validate(params);
+  if (schema.error) {
+    console.error(schema);
+    ctx.throw(400, schema.error);
+  }
+
+  await next();
+};
+
 export default {
-  addProject
+  addProject,
+  updateProject
 };

@@ -13,6 +13,7 @@ const register = async (ctx: Koa.Context, next: Koa.Next) => {
   const params = ctx.request.body as UserRequest;
   const schema = Joi.object({
     username: Joi.string().min(3).max(20).required(),
+    name: Joi.string().required(),
     phone: Joi.string(),
     email: Joi.string().email(),
     password: Joi.string().min(6).max(20).required(),
@@ -27,10 +28,6 @@ const register = async (ctx: Koa.Context, next: Koa.Next) => {
     ctx.throw(400, 'Email already existing');
   }
 
-  const phoneValidate = await User.findOne({ phone: params.phone });
-  if (phoneValidate) {
-    ctx.throw(400, 'Phone already existing');
-  }
   const usernameValidate = await User.findOne({ username: params.username });
   if (usernameValidate) {
     ctx.throw(400, 'Username already existing');

@@ -13,6 +13,12 @@ router
     projectValidate.addProject,
     projectController.addProject
   )
-  .get('/:projectId', verifyToken(true), projectController.getProjectById);
+  .get('/:projectId', verifyToken(true), projectController.getProjectById)
+  .put(
+    '/:projectId', 
+    verifyToken(true), 
+    projectValidate.updateProject,
+    projectController.updateProject
+  ).del('/:projectId', verifyToken(true), projectController.deleteProject);
 
 export default router;

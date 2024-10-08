@@ -6,7 +6,11 @@ import md5 from '../utils/md5';
 const userSchema = new Schema({
   username: {
     type: String,
-    require: false
+    require: true
+  },
+  name: {
+    type: String,
+    require: true
   },
   phone: {
     type: String,
@@ -14,7 +18,7 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    require: false
+    require: true
   },
   password: {
     type: String,
