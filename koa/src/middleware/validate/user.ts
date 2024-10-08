@@ -15,7 +15,7 @@ const register = async (ctx: Koa.Context, next: Koa.Next) => {
     username: Joi.string().min(3).max(20).required(),
     phone: Joi.string(),
     email: Joi.string().email(),
-    password: Joi.string().min(6).max(20).required()
+    password: Joi.string().min(6).max(20).required(),
   }).validate(params);
   if (schema.error) {
     console.error(schema);
@@ -42,7 +42,7 @@ const login = async (ctx: Koa.Context, next: Koa.Next) => {
   const params = ctx.request.body as UserRequest;
   const schema = Joi.object({
     username: Joi.string().min(3).max(20).required(),
-    password: Joi.string().min(6).max(20).required()
+    password: Joi.string().min(6).max(20).required(),
   }).validate(params);
   if (schema.error) {
     console.error(schema);
@@ -50,12 +50,12 @@ const login = async (ctx: Koa.Context, next: Koa.Next) => {
   }
   const usernameValidate = await User.findOne({ username: params.username });
   if (!usernameValidate) {
-    ctx.throw(400, 'Username already existing');
+    ctx.throw(400, 'User not found');
   }
   await next();
 };
 
 export default {
   register,
-  login
+  login,
 };

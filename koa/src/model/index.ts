@@ -5,7 +5,7 @@ import UserSchema from './user';
 
 async function main() {
   try {
-    await mongoose.connect(process.env.DATABASE_URL || '');
+    await mongoose.connect(process.env.DATABASE_URL || '', { dbName: process.env.DATABASE_NAME });
     console.log('mongodb connected');
   } catch (err) {
     console.error(`mongodb error ${err}`);

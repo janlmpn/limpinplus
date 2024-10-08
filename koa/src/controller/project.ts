@@ -13,8 +13,15 @@ const getProjectById = async (ctx: Context) => {
   ctx.body = user;
 };
 
+const addProject = async (ctx: Context) => {
+  const userModel = new Project(ctx.request.body);
+  const rsp = (await userModel.save()).toJSON();
+  ctx.body = rsp;
+};
+
 
 export default {
   getProjects,
-  getProjectById
+  getProjectById,
+  addProject
 };

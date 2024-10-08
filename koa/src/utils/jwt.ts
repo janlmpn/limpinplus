@@ -5,7 +5,7 @@ export const createToken = (userInfo: any) => {
   return new Promise((resolve, reject) => {
     jwt.sign(
       userInfo,
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET_KEY,
       {
         expiresIn: 60 * 60 * 24,
       },
@@ -25,7 +25,7 @@ export const verifyToken = (required = true) => {
     const token = ctx.headers.authorization?.replace(/Bearer\s/, '');
     if (token) {
       try {
-        ctx.userInfo = jwt.verify(token, process.env.JWT_SECRET);
+        ctx.userInfo = jwt.verify(token, process.env.JWT_SECRET_KEY);
       } catch {
         ctx.throw(401, 'token validation error');
       }
