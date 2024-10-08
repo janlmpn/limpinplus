@@ -5,9 +5,18 @@ import mongoose from 'mongoose';
 const filterFields = [];
 
 const getProjects = async (ctx: Context) => {
-  const projects = await Project.find({}, filterFields);
+  const { q } = ctx.query;
+  const projects = await Project.find( !!q ? {
+    $or: [
+      { title: { $regex: q, $options: 'i' } },
+      { type: { $regex: q, $options: 'i' } },
+      { description: { $regex: q, $options: 'i' } },
+      { address: { $regex: q, $options: 'i' } },
+    ],
+  } : {}, filterFields);
   ctx.body = projects;
 };
+
 
 const getProjectById = async (ctx: Context) => {
   const project = 

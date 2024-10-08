@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   records: any[] = [];
+  filteredRecords: any[] = [];
+  searchQuery: string = '';
 
   constructor(private apiService: ApiService, private router: Router) {}
 
@@ -19,6 +21,7 @@ export class DashboardComponent implements OnInit {
   loadRecords(): void {
     this.apiService.getData('projects').subscribe((data: any) => {
       this.records = data;
+      this.filteredRecords = data;
     });
   }
 
@@ -36,6 +39,16 @@ export class DashboardComponent implements OnInit {
 
   editRecord(id: string): void {
     this.router.navigate(['/form', { id }]);
+  }
+
+  onSearch(): void {
+    if (this.searchQuery) {
+      this.apiService.searchRecords(`projects`,this.searchQuery).subscribe((data: any) => {
+        this.filteredRecords = data; 
+      });
+    } else {
+      this.filteredRecords = this.records; 
+    }
   }
 
 }

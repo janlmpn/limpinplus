@@ -32,8 +32,11 @@ export class ApiService {
   getDataById(endpoint: string, id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/${endpoint}/${id}`, { headers: this.getHeaders() });
   }
-
   deleteData(endpoint: string, id: string){
     return this.http.delete(`${this.baseUrl}/${endpoint}/${id}`, { headers: this.getHeaders() });
+  }
+
+  searchRecords(endpoint: string, query: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${endpoint}?q=${query}`, { headers: this.getHeaders() });
   }
 }

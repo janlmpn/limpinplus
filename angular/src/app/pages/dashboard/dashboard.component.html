@@ -1,5 +1,13 @@
 <app-header></app-header>
 <div class="p-4">
+  <div class="mb-4"></div>
+    <input 
+      type="text" 
+      [(ngModel)]="searchQuery" 
+      (input)="onSearch()" 
+      placeholder="Search records..." 
+      class="border p-2 rounded-md"
+    />
   <button (click)="navigateToForm()" class="bg-green-500 text-white px-4 py-2 rounded-md mb-4">Create New Record</button>
   <table class="w-full border-collapse">
     <thead>
@@ -14,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let record of records">
+      <tr *ngFor="let record of filteredRecords">
         <td class="border p-2">{{ record.title }}</td>
         <td class="border p-2">{{ record.type }}</td>
         <td class="border p-2">{{ record.description }}</td>
