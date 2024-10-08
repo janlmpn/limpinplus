@@ -16,9 +16,18 @@ app.use(bodyParser());
 // Routes
 app.use(router.routes()).use(router.allowedMethods());
 
-app.on('error', (err) => {
-  console.error(JSON.stringify(err));
-});
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    // will only respond with JSON
+    console.error('Error - ', err.message)
+    ctx.status = err.statusCode || err.status || 500;
+    ctx.body = {
+      message: err.message
+    };
+  }
+})
 
 app.listen(process.env.PORT || 3001, () => {
   console.log("Koa started");
