@@ -3,7 +3,8 @@ import cors from '@koa/cors';
 import logger from "koa-logger";
 import json from "koa-json";
 import bodyParser from "koa-bodyparser";
-import router from './router';
+import importedRouter from './router';
+import Router from 'koa-router';
 
 const app = new Koa();
 app.use(cors());
@@ -12,9 +13,6 @@ app.use(cors());
 app.use(json());
 app.use(logger());
 app.use(bodyParser());
-
-// Routes
-app.use(router.routes()).use(router.allowedMethods());
 
 app.use(async (ctx, next) => {
   try {
@@ -28,6 +26,15 @@ app.use(async (ctx, next) => {
     };
   }
 })
+
+// Routes
+const router = new Router();
+router
+  .get('/', async (ctx, next) => {
+    ctx.body = { message: 'Hello, World!' };  
+  });
+
+app.use(router.routes()).use(importedRouter.routes()).use(importedRouter.allowedMethods());
 
 app.listen(process.env.PORT || 3001, () => {
   console.log("Koa started");
