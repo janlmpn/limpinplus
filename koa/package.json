@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "@koa/cors": "^5.0.0",
-    "@now/node": "^1.8.5",
     "@vercel/node": "^3.2.19",
     "dotenv": "^16.4.5",
     "joi": "^17.13.3",
